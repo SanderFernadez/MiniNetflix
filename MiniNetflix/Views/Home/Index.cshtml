@@ -1,0 +1,63 @@
+﻿<div class="container-fluid">
+    <div class="row mt-5" style="margin-left: 250px;">
+
+        @if (Model.Count == 0 || Model == null)
+        {
+            <h2>No hay Series</h2>
+        }
+        else
+        {
+            <!-- Columna izquierda (3 tarjetas) -->
+            <div class="col-md-6">
+                @for (int i = 0; i < Model.Count / 2; i++)
+                {
+                    var item = Model[i];
+                    <!-- Tarjeta de la serie -->
+                    <div class="row g-0 position-relative" style="max-width: 600px; max-height: 500px;">
+                        <div class="col-4 mb-md-0 p-md-2">
+                            <!-- Imagen con tamaño fijo y object-fit -->
+                            <img class="bd-placeholder-img card-img-top" src="@item.PortadaUrl" style="width: 100%; height: 200px; object-fit: cover; border-radius: 10px;" />
+                        </div>
+                        <div class="col-7 p-2 ps-md-0">
+                            <h5 class="mt-0 fs-3 ms-3 fw-bold"> @item.Title </h5>
+                            <div class="row ms-2">
+                                <div class="col-4">
+                                    <p class="fs-6 text-info fw-bold">@item.GenreId</p>
+                                    <p class="fs-6 text-info fw-bold">@item.GenreId</p>
+                                </div>
+                            </div>
+                            <span class="text-black ms-4 fs-5 mt-0 fw-bold">@item.ProducerId</span>
+                            <button class="btn btn-warning text-white ms-4 fw-bold mt-4" style="font-size: 1.0rem; padding: 6px 15px;">Detalles</button>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <!-- Columna derecha (3 tarjetas) -->
+            <div class="col-md-6">
+                @for (int i = Model.Count / 2; i < Model.Count; i++)
+                {
+                    var item = Model[i];
+                    <!-- Tarjeta de la serie -->
+                    <div class="row g-0 position-relative" style="max-width: 600px; max-height: 500px;">
+                        <div class="col-4 mb-md-0 p-md-2">
+                            <!-- Imagen con tamaño fijo y object-fit -->
+                            <img class="bd-placeholder-img card-img-top" src="@item.PortadaUrl" style="width: 100%; height: 200px; object-fit: cover; border-radius: 10px;" />
+                        </div>
+                        <div class="col-7 p-2 ps-md-0">
+                            <h5 class="mt-0 fs-3 ms-3 fw-bold"> @item.Title </h5>
+                            <div class="row ms-2">
+                                <div class="col-4">
+                                    <p class="fs-6 text-info fw-bold">@item.GenreId</p>
+                                    <p class="fs-6 text-info fw-bold">@item.GenreId</p>
+                                </div>
+                            </div>
+                            <span class="text-black ms-4 fs-5 mt-0 fw-bold">@item.ProducerId</span>
+                            <button class="btn btn-warning text-white ms-4 fw-bold mt-4" style="font-size: 1.0rem; padding: 6px 15px;">Detalles</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</div>
