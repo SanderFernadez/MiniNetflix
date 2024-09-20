@@ -30,5 +30,7 @@ namespace Application.ViewModels
 
         public string Producer { get; set; }
 
+        public string GenreName { get; set; }
+
     }
 }

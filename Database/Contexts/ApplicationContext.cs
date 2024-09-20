@@ -41,6 +41,9 @@ namespace Database.Contexts
 
             #region RelationShips
 
+
+
+
             modelBuilder.Entity<Producer>()
                 .HasMany<Serie>(p => p.Series)
                 .WithOne(s => s.Producer)

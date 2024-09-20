@@ -19,6 +19,8 @@ namespace Application.Repository
             _dbContext = dbContext;
         }
 
+        public IQueryable<Serie> Series => _dbContext.Series;
+
 
         public async Task AddAsync(Serie serie)
         {
@@ -41,6 +43,13 @@ namespace Application.Repository
         public async Task<List<Serie>> GetAllAsync()
         {
             return await _dbContext.Set<Serie>().ToListAsync();
+        }
+
+
+
+        public async Task<List<Genre>> GetAllGenreAsync()
+        {
+            return await _dbContext.Genres.ToListAsync();
         }
 
         public async Task<Serie> GetByIdAsync(int id)

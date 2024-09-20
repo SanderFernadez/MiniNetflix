@@ -1,6 +1,7 @@
 ﻿using Application.Repository;
 using Application.ViewModels;
 using Database.Contexts;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,13 +29,30 @@ namespace Application.Services
                     Description = serie.Description,
                     Id = serie.Id,
                     VideoUrl = serie.VideoUrl,
-                    PortadaUrl = serie.PortadaUrl
+                    PortadaUrl = serie.PortadaUrl,
+
 
 
 
             }).ToList();
         }
+        public async Task<List<SerieViewModel>> GetAllSeriesWithGenresAsync()
+        {
+            var seriesWithGenres = await _repository.Series
+                .Include(s => s.Genre) // Asegúrate de incluir el género
+                .Select(s => new SerieViewModel
+                {
+                    Id = s.Id,
+                    Title = s.Title,
+                    PortadaUrl = s.PortadaUrl,
+                    GenreId = s.GenreId,
+                    GenreName = s.Genre.Name, // Asigna el nombre del género
+                    ProducerId = s.ProducerId
+                })
+                .ToListAsync();
 
+            return seriesWithGenres;
+        }
 
 
 
