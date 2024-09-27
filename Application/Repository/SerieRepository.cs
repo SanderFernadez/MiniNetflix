@@ -20,7 +20,7 @@ namespace Application.Repository
         }
 
         public IQueryable<Serie> Series => _dbContext.Series;
-
+        
 
         public async Task AddAsync(Serie serie)
         {
@@ -33,6 +33,56 @@ namespace Application.Repository
             _dbContext.Entry(serie).State = EntityState.Modified;
             await _dbContext.SaveChangesAsync();
         }
+
+        public async Task UpdateGenresAsync(Serie serie)
+        {
+           
+            if (serie == null || serie.SecondaryGenresIds == null)
+            {
+                throw new ArgumentNullException(nameof(serie), "La serie o su lista de géneros secundarios no puede ser nula.");
+            }
+
+           
+            var existingGenreRelations = await _dbContext.genre_Series
+                .Where(gs => gs.SerieId == serie.Id)
+                .ToListAsync();
+
+           
+            var existingGenreIds = existingGenreRelations.Select(gs => gs.GenreId).ToList();
+
+            
+            var genresToRemove = existingGenreRelations
+                .Where(gs => !serie.SecondaryGenresIds.Contains(gs.GenreId))
+                .ToList();
+
+            if (genresToRemove.Any())
+            {
+                _dbContext.genre_Series.RemoveRange(genresToRemove);
+                await _dbContext.SaveChangesAsync(); 
+            }
+
+            
+            foreach (var genreId in serie.SecondaryGenresIds)
+            {
+                
+                if (!existingGenreIds.Contains(genreId))
+                {
+                    var newRelation = new genre_serie
+                    {
+                        SerieId = serie.Id,
+                        GenreId = genreId
+                    };
+                    await _dbContext.genre_Series.AddAsync(newRelation);
+                }
+            }
+
+           
+            await _dbContext.SaveChangesAsync();
+        }
+
+
+
+
 
         public async Task DeleteAsync(Serie serie)
         {
@@ -51,6 +101,12 @@ namespace Application.Repository
         {
             return await _dbContext.Genres.ToListAsync();
         }
+
+        public async Task<List<Producer>> GetAllProducersAsync()
+        {
+            return await _dbContext.Producers.ToListAsync();
+        }
+
 
         public async Task<Serie> GetByIdAsync(int id)
         {

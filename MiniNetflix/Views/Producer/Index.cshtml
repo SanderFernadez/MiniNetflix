@@ -1,0 +1,64 @@
+﻿@model List<Application.ViewModels.ProducerViewModel>
+
+@{
+    ViewData["Title"] = "Mantenimiento Productoras";
+}
+
+<div class="container-fluid ms-5">
+    <div class="row mb-3 mt-4 mx-3">
+        <div class="col text-end">
+            <a class="btn btn-primary text-white fw-bold" asp-action="Create" asp-controller="Producer">
+                <i class="bi bi-plus-circle me-1"></i> Agregar Productora
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row mt-5">
+                @if (Model == null || !Model.Any())
+                {
+                    <h2 class="fw-bold fs-1 ms-5">No hay productoras :(</h2>
+                }
+                else
+                {
+                    for (int i = 0; i < Model.Count; i += 2)
+                    {
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <div class="card shadow-sm">
+                                    <div class="card-body">
+                                        <h5 class="mt-0 fs-3 fw-bold">@Model[i].Name</h5>
+                                        <div class="d-flex justify-content-between">
+                                            <div class="btn-group">
+                                                <button class="btn btn-warning text-white fw-bold" onclick="location.href='@Url.Action("Edit", "Producer", new { id = Model[i].Id })'">Editar</button>
+                                                <button class="btn btn-danger ms-2  text-white fw-bold" onclick="location.href='@Url.Action("Delete", "Producer", new { id = Model[i].Id })'">Eliminar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @if (i + 1 < Model.Count)
+                            {
+                                <div class="col-md-6">
+                                    <div class="card shadow-sm">
+                                        <div class="card-body">
+                                            <h5 class="mt-0 fs-3 fw-bold">@Model[i + 1].Name</h5>
+                                            <div class="d-flex justify-content-between">
+                                                <div class="btn-group">
+                                                    <button class="btn btn-warning text-white fw-bold" onclick="location.href='@Url.Action("Edit", "Producer", new { id = Model[i + 1].Id })'">Editar</button>
+                                                    <button class="btn btn-danger ms-2  text-white fw-bold" onclick="location.href='@Url.Action("Delete", "Producer", new { id = Model[i + 1].Id })'">Eliminar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>

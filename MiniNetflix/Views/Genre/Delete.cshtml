@@ -1,0 +1,24 @@
+﻿@model Application.ViewModels.SaveGenreViewModel
+
+@{
+    ViewData["Title"] = "Eliminar Genero"; 
+}
+
+<div class="row">
+
+    <div class="col-6 offset-3">
+        <div class="card">
+            <div class="card-header bg-danger text-light">
+                <h4>Esta Seguro Que Desea Eliminar el Genero @Model.Name</h4>
+            </div>
+            <div class="card-body">
+                <form method="post" asp-controller="Genre" asp-action="DeletePost">
+                    <input type="hidden" asp-for="Id"/>
+
+                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                    <a asp-controller="Genre" asp-action="Index" class="btn btn-warning">Cancelar</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

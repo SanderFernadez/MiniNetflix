@@ -1,0 +1,136 @@
+﻿@model Application.ViewModels.SaveSerieViewModel
+
+@{
+    bool editMode = Model.Id != 0; 
+    ViewData["Title"] = "Guardar Serie";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-6 offset-3">
+            <div class="card">
+                <div class="card-header bg-warning fw-bold text-black">
+                    <h4>
+                        @(editMode ? $"Editando la serie: {Model.Title}" : "CREANDO UNA NUEVA SERIE")
+                    </h4>
+                </div>
+
+                <div class="card-body">
+                    <div class="row g-0 position-relative" style="max-width: 600px; max-height: 500px;">
+                        <div class="col-4 mb-md-0 p-md-2">
+                            <img class="bd-placeholder-img card-img-top" src="@Model.PortadaUrl" style="width: 100%; height: 200px; object-fit: cover; border-radius: 10px;" />
+                        </div>
+                    </div>
+
+                    <form method="post" asp-controller="Serie" asp-action="@(editMode ? "Edit" : "Create")">
+                        <div class="mb-3">
+                            <label asp-for="Title" class="form-label fw-bold">Titulo:</label>
+                            <input type="text" asp-for="Title" class="form-control" />
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+
+                            <p class="fw-bold d-inline">Nota:</p>
+                            <span class="text-muted">
+                                Para que el enlace del video funcione correctamente, utiliza la opción "Incorporar"  que aparece cuando seleccionas "Compartir" en el video de youtube. Copia y pega ese enlace aquí (Solamente el enlace).
+                            </span>
+                            <br />
+                            <br />
+
+                            <label class="form-label fw-bold">Url Video:</label>
+                            
+                            <input type="text" asp-for="VideoUrl" class="form-control mt-2" />
+                            <span asp-validation-for="VideoUrl" class="text-danger"></span>
+                        </div>
+
+
+                        <div class="mb-3">
+                            <label asp-for="PortadaUrl" class="form-label fw-bold">Url Portada:</label>
+                            <input type="text" asp-for="PortadaUrl" class="form-control" />
+                            <span asp-validation-for="PortadaUrl" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Description" class="form-label fw-bold">Descripción:</label>
+                            <textarea asp-for="Description" class="form-control"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="ProducerId" class="form-label fw-bold">Productora Principal:</label>
+                            <select asp-for="ProducerId" class="form-select">
+                                <option value="">Seleccione una opción</option>
+                                @foreach (var producer in ViewBag.Producers)
+                                {
+                                    <option value="@producer.Value" selected="@(producer.Value.ToString() == Model.ProducerId.ToString() ? "selected" : null)">
+                                        @producer.Text
+                                    </option>
+
+                                }
+                            </select>
+                            <span asp-validation-for="ProducerId" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="GenreId" class="form-label fw-bold">Género Principal:</label>
+                            <select asp-for="GenreId" class="form-select">
+                                
+                                <option value="">Seleccione una opción</option>
+                                @foreach (var genre in ViewBag.Genres)
+                                {
+                                    <option value="@genre.Value" selected="@(genre.Value.ToString() == Model.GenreId.ToString() ? "selected" : null)">
+                                        @genre.Text
+                                    </option>
+
+                                }
+                            </select>
+                            <span asp-validation-for="GenreId" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Géneros Secundarios:</label>
+                            <div>
+                                @foreach (var genre in ViewBag.SecondaryGenres)
+                                {
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" name="SecondaryGenresIds" value="@genre.Id"
+                                        @(Model.SecondaryGenresIds != null && Model.SecondaryGenresIds.Contains(genre.Id) ? "checked" : "") />
+                                        <label class="form-check-label">@genre.Name</label>
+                                        
+                                    </div>
+
+                                }
+                                        
+                           
+                        </div>
+
+                        <input type="hidden" asp-for="Id" />
+
+                        <a asp-action="Index" asp-controller="Serie" class="btn btn-warning mt-3">Volver Atrás</a>
+                        <button type="submit" class="btn btn-primary mt-3">Guardar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    const maxSelection = 4;
+
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', () => {
+            const checkedCount = document.querySelectorAll('input[type="checkbox"]:checked').length;
+
+            if (checkedCount > maxSelection) {
+                alert(`Solo puedes seleccionar un máximo de ${maxSelection} géneros secundarios.`);
+                checkbox.checked = false; 
+            }
+        });
+    });
+
+   
+
+</script>

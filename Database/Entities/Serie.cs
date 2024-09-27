@@ -28,7 +28,10 @@ namespace Database.Entities
 
         public int? ProducerId { get; set; }
 
-        public ICollection<genre_serie>? SecondaryGenres { get; set; }
+
+        public ICollection<genre_serie> SecondaryGenres { get; set; } = new List<genre_serie>();
+
+        public List<int>? SecondaryGenresIds { get; set; } = new List<int>();
 
 
         //Navigation Property

@@ -12,9 +12,10 @@ namespace Application.ViewModels
 
         public int Id { get; set; }
 
-      
+     
         public string Title { get; set; }
 
+        
         public string? Description { get; set; }
 
 
@@ -22,15 +23,19 @@ namespace Application.ViewModels
 
         public int? ProducerId { get; set; }
 
+        
         public string? PortadaUrl { get; set; }
 
+       
         public string? VideoUrl { get; set; }
 
+        
         public List<string> Genres { get; set; } = new List<string>();
 
         public string Producer { get; set; }
 
         public string GenreName { get; set; }
+        public string ProducerName { get; set; }
 
     }
 }

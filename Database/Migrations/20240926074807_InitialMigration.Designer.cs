@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Database.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20240919205142_InitialMigration")]
+    [Migration("20240926074807_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -82,6 +82,9 @@ namespace Database.Migrations
                     b.Property<int?>("ProducerId")
                         .HasColumnType("int");
 
+                    b.Property<string>("SecondaryGenresIds")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -125,7 +128,7 @@ namespace Database.Migrations
                     b.HasOne("Database.Entities.Producer", "Producer")
                         .WithMany("Series")
                         .HasForeignKey("ProducerId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Genre");
 

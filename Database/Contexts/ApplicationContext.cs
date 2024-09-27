@@ -42,13 +42,11 @@ namespace Database.Contexts
             #region RelationShips
 
 
-
-
             modelBuilder.Entity<Producer>()
-                .HasMany<Serie>(p => p.Series)
-                .WithOne(s => s.Producer)
-                .HasForeignKey(s => s.ProducerId)
-                .OnDelete(DeleteBehavior.SetNull);
+                   .HasMany<Serie>(p => p.Series)
+                   .WithOne(s => s.Producer)
+                   .HasForeignKey(s => s.ProducerId)
+                   .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Serie>()
                     .HasOne(s => s.Genre)
@@ -56,15 +54,15 @@ namespace Database.Contexts
                     .HasForeignKey(s => s.GenreId)
                     .OnDelete(DeleteBehavior.SetNull);
 
-            modelBuilder.Entity<genre_serie>()
-             .HasOne(sg => sg.Serie)
-             .WithMany(s => s.SecondaryGenres)
-             .HasForeignKey(sg => sg.SerieId);
+             modelBuilder.Entity<genre_serie>()
+                    .HasOne(sg => sg.Serie)
+                    .WithMany(s => s.SecondaryGenres)
+                    .HasForeignKey(sg => sg.SerieId);
 
             modelBuilder.Entity<genre_serie>()
-                .HasOne(sg => sg.Genre)
-                .WithMany(g => g.Series)
-                .HasForeignKey(sg => sg.GenreId);
+                   .HasOne(sg => sg.Genre)
+                   .WithMany(g => g.Series)
+                   .HasForeignKey(sg => sg.GenreId);
 
             #endregion
 

@@ -1,0 +1,38 @@
+﻿@model Application.ViewModels.SaveGenreViewModel
+
+@{
+    bool editMode = Model.Id.HasValue && Model.Id.Value > 0;
+
+    ViewData["Title"] = "Guardar Género";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-6 offset-3">
+            <div class="card">
+                <div class="card-header bg-warning fw-bold text-black">
+                    <h4>
+                        @(editMode ? $"Editando el Género: {Model.Name}" : "Creando un Nuevo Género")
+                    </h4>
+                </div>
+
+                <div class="card-body">
+                    <form method="post" asp-controller="Genre" asp-action="@(editMode ? "Edit" : "Create")">
+
+                        <div class="mb-3">
+                            <label asp-for="Name" class="form-label fw-bold">Nombre del Género:</label>
+                            <input type="text" asp-for="Name" class="form-control" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                           
+                        </div>
+
+                        <input type="hidden" asp-for="Id" />
+
+                        <a asp-controller="Genre" asp-action="Index" class="btn btn-warning mt-3">Volver Atrás</a>
+                        <button type="submit" class="btn btn-primary mt-3">Guardar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

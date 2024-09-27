@@ -79,6 +79,9 @@ namespace Database.Migrations
                     b.Property<int?>("ProducerId")
                         .HasColumnType("int");
 
+                    b.Property<string>("SecondaryGenresIds")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -122,7 +125,7 @@ namespace Database.Migrations
                     b.HasOne("Database.Entities.Producer", "Producer")
                         .WithMany("Series")
                         .HasForeignKey("ProducerId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Genre");
 

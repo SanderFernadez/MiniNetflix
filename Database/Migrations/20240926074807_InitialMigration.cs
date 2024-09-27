@@ -47,7 +47,8 @@ namespace Database.Migrations
                     PortadaUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     GenreId = table.Column<int>(type: "int", nullable: true),
-                    ProducerId = table.Column<int>(type: "int", nullable: true)
+                    ProducerId = table.Column<int>(type: "int", nullable: true),
+                    SecondaryGenresIds = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -63,7 +64,7 @@ namespace Database.Migrations
                         column: x => x.ProducerId,
                         principalTable: "Producers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.SetNull);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(

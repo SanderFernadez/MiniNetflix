@@ -1,12 +1,20 @@
 ﻿@model List<Application.ViewModels.SerieViewModel>
 
 @{
-    ViewData["Title"] = "Home";
+    ViewData["Title"] = "Mantenimiento Series";
 }
-<div class="container mt-5">
-    <div class="row">
 
-        <div class="col-lg-3 col-md-4 col-sm-12 mt-5 ">
+<div class="container-fluid">
+    <div class="row mb-3 mt-4">
+        <div class="col text-end " style="margin-right: 25px;">
+            <a class="btn btn-primary text-white fw-bold" asp-action="Create" asp-controller="Serie">
+                <i class="bi bi-plus-circle me-1"></i> Agregar
+            </a>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top: -30px;">
+        <div class="col-lg-3 col-md-4 col-sm-12 mt-5">
             <form asp-action="Index" method="get" class="p-3 bg-light rounded" style="margin-left: -40px;">
                 <div class="mb-3">
                     <label for="GenreId" class="form-label fw-bold">Filtrar por género</label>
@@ -34,7 +42,7 @@
             </form>
         </div>
 
-        <div class="col-lg-9 col-md-8 col-sm-12">
+        <div class="col-lg-9 col-md-8 col-sm-12 mt-0">
             <div class="row mt-5">
                 @if (Model == null || !Model.Any())
                 {
@@ -52,31 +60,27 @@
                                             <img class="bd-placeholder-img card-img-top" src="@Model[i].PortadaUrl" style="width:180px; height: 290px; object-fit: cover; border-radius: 10px;" />
                                         </div>
                                         <div class="col-8 p-2 ps-md-0">
-
-                                            <div style="margin-left:10px;">
-                                                <div class="ms-5"> <h5 class="mt-0 fs-3 fw-bold text-truncate" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">@Model[i].Title</h5></div>
-                                             
-                                         
-                                          </div>
-                                            <div style="margin-left:60px; margin-top: 20px; position:relative;"> <p class="fs-6 text-info fw-bold">@Model[i].GenreName</p></div>
+                                            <div class="ms-5"> <h5 class="mt-0 fs-3 fw-bold ms-3 text-truncate" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">@Model[i].Title</h5></div>
+                                            <div class="ms-5"> <p class="fs-6 ms-3 text-info fw-bold">@Model[i].GenreName</p></div>
                                             <div class="d-flex ms-3 flex-wrap mb-5">
                                                 @if (Model[i].Genres != null && Model[i].Genres.Any())
                                                 {
                                                     for (int j = 0; j < Model[i].Genres.Count; j++)
                                                     {
-                                                        <span class="fs-6 text-danger ms-5 mt-1" style="margin-bottom: 0.5rem;  ">@Model[i].Genres[j]</span>
+                                                        <span class="fs-6 text-danger ms-5 mt-0" style="margin-bottom: 0.5rem;">@Model[i].Genres[j]</span>
                                                         @if ((j + 1) % 2 == 0 && j + 1 < Model[i].Genres.Count)
                                                         {
-                                                            <div class="w-100"></div>
+                                                            <div class="w-100 mt-3"></div>
                                                         }
                                                     }
                                                 }
                                             </div>
-                                            <div class="mb-5" style="margin-top: -30px;  margin-left:10px;">
-                                                <span class="text-black ms-5 fs-5 mb-3 fw-bold" >@Model[i].ProducerName</span>
+                                            <div class="mb-5" style="margin-top: -30px;">
+                                                <div class="ms-5"><span class="text-black fs-5 mb-3 text-truncate ms-3 fw-bold" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">@Model[i].ProducerName</span></div>
                                                 <div class="d-flex align-items-center">
-                                                    <div class="btn-group ms-5" style="margin-top: 7px; margin-left: 100px; position:relative;  ">
-                                                        <button class="btn btn-warning text-white fw-bold mt-4 ms-0 d-flex justify-content-center " style="width: 225px; " onclick="location.href='@Url.Action("Index", "Detail", new { id = Model[i].Id })'">Detalles</button>
+                                                    <div class="btn-group ms-4" style="margin-top: 35px;">
+                                                        <button class="btn btn-warning text-white fw-bold mt-2 ms-4 d-flex justify-content-center" style="width: 115px;" onclick="location.href='@Url.Action("Edit", "Serie", new { id = Model[i].Id })'">Editar</button>
+                                                        <button class="btn btn-danger text-white fw-bold ms-1 mt-2 justify-content-center" style="width: 120px;" onclick="location.href='@Url.Action("Delete", "Serie", new { id = Model[i].Id })'">Eliminar</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -88,51 +92,44 @@
                             @if (i + 1 < Model.Count)
                             {
                                 <div class="col-md-6">
-                                    <div class="card" style="background-color: #f8f9fa; border: none; box-shadow: 0 4px 8px rgba(0,0,0,0.2); height: 310px;">
+                                    <div class="card" style="background-color: #f8f9fa; border: none; box-shadow: 0 4px 8px rgba(0,0,0,0.2);  height: 310px;">
                                         <div class="row g-0 position-relative">
                                             <div class="col-4 mb-md-0 p-md-2">
-                                                <img class="bd-placeholder-img card-img-top" src="@Model[i + 1].PortadaUrl" style=" width:180px; height: 290px; object-fit: cover; border-radius: 10px; margin-left: 10px;" />
+                                                <img class="bd-placeholder-img card-img-top" src="@Model[i + 1].PortadaUrl" style="width:180px; height: 290px; object-fit: cover; border-radius: 10px;" />
                                             </div>
-                                            
-                                                <div class="col-8 p-2 ps-md-0">
+                                            <div class="col-8 p-2 ps-md-0">
                                                 <div class="ms-5"> <h5 class="mt-0 fs-3 ms-3 fw-bold text-truncate" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">@Model[i + 1].Title</h5></div>
-                                                <div class="ms-5 mt-3"> <p class="fs-6 ms-3 text-info fw-bold">@Model[i + 1].GenreName</p></div>
-                                                    <div class="d-flex ms-3 flex-wrap mb-5">
-                                                        @if (Model[i + 1].Genres != null && Model[i + 1].Genres.Any())
+                                                <div class="ms-5"><p class="fs-6 ms-3 text-info fw-bold">@Model[i + 1].GenreName</p></div>
+                                                <div class="d-flex ms-3 flex-wrap mb-5">
+                                                    @if (Model[i + 1].Genres != null && Model[i + 1].Genres.Any())
+                                                    {
+                                                        for (int j = 0; j < Model[i + 1].Genres.Count; j++)
                                                         {
-                                                            for (int j = 0; j < Model[i + 1].Genres.Count; j++)
+                                                            <span class="fs-6 text-danger ms-5 mt-0" style="margin-bottom: 0.5rem;">@Model[i + 1].Genres[j]</span>
+                                                            @if ((j + 1) % 2 == 0 && j + 1 < Model[i + 1].Genres.Count)
                                                             {
-                                                            <span class="fs-6 text-danger ms-5 mt-1" style="margin-bottom: 0.5rem;">@Model[i + 1].Genres[j]</span>
-                                                                @if ((j + 1) % 2 == 0 && j + 1 < Model[i + 1].Genres.Count)
-                                                                {
-                                                                    <div class="w-100 ">
-                                                                    </div>
-                                                                }
+                                                                <div class="w-100 mt-3"></div>
                                                             }
-                                                       }
-                                                    </div>
-                                                    <div class="mb-5" style="margin-top: -55px;">
-                                                    <div class="ms-5" style="margin-top: 100px; "> <span class="text-black fs-5 mb-3 ms-3 fw-bold">@Model[i + 1].ProducerName</span></div>
-                                                        <div class="d-flex align-items-center">
-                                                        <div class="btn-group ms-5" style="margin-top: -10px;  position:relative;  ">
-                                                            <button class="btn btn-warning text-white fw-bold mt-4 ms-0 d-flex justify-content-center ms-3 " style="width: 225px; " onclick="location.href='@Url.Action("Index", "Detail", new { id = Model[i + 1].Id })'">Detalles</button>
-                                                        </div>
+                                                        }
+                                                    }
+                                                </div>
+                                                <div class="mb-5" style="margin-top: -23px;">
+                                                    <div class="ms-5"> <span class="text-black fs-5 mb-3 ms-3 fw-bold">@Model[i + 1].ProducerName</span></div>
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="btn-group ms-4" style="margin-top: 25px; ">
+                                                            <button class="btn btn-warning text-white fw-bold ms-4 mt-2 d-flex justify-content-center" style="width: 115px; "  onclick="location.href='@Url.Action("Edit", "Serie", new { id = Model[i + 1].Id })'">Editar</button>
+                                                            <button class="btn btn-danger text-white fw-bold  ms-1 mt-2 justify-content-center" style="width: 120px;" onclick="location.href='@Url.Action("Delete", "Serie", new { id = Model[i + 1].Id })'">Eliminar</button>
                                                         </div>
                                                     </div>
                                                 </div>
-                                           
-
-
-
                                             </div>
-                                         </div>   
-                                    
+                                        </div>
+                                    </div>
                                 </div>
                             }
                         </div>
                     }
                 }
-
             </div>
         </div>
     </div>
